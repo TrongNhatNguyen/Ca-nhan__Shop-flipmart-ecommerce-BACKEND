@@ -1,0 +1,136 @@
+# --------------------------------------
+
+DATABASE_NAME: shop_flipmart_ecommerce
+
+# --------------------------------------
+
+// Table Users {
+//   user_id int [pk]
+//   username varchar
+//   password varchar
+//   email varchar
+//   created_at timestamp
+//   updated_at timestamp
+//   // More fields as needed...
+// }
+
+
+// Sản phẩm: ------------
+Table Products {
+  product_id int [pk]
+  name varchar
+  description varchar
+  price decimal
+  discount_price decimal
+  brand_id int
+  created_at timestamp
+  updated_at timestamp
+  is_hot boolean
+  is_new boolean
+}
+
+
+// Danh mục: ------------
+Table Categories {
+  category_id int [pk]
+  name varchar
+  parent_id int
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table ProductCategories {
+  product_id int [ref: - Products.product_id]
+  category_id int [ref: - Categories.category_id]
+}
+
+
+// Thương hiệu: ------------
+Table Brands {
+  brand_id int [pk]
+  name varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+
+// Màu SP: ------------
+Table Colors {
+  color_id int [pk]
+  name varchar
+  hex_value varchar
+}
+Table ProductColors {
+  product_id int [ref: - Products.product_id]
+  color_id int [ref: - Colors.color_id]
+}
+
+
+// Ảnh Sản phẩm: ------------
+Table ProductImages {
+  image_id int [pk]
+  product_id int [ref: - Products.product_id]
+  image_path varchar
+  is_primary boolean
+}
+
+
+//// Đánh giá SP: ------------
+// Table Reviews {
+//   review_id int [pk]
+//   product_id int [ref: - Products.product_id]
+//   user_id int [ref: - Users.user_id]
+//   rating int
+//   comment varchar
+//   created_at timestamp
+//   updated_at timestamp
+// }
+
+// Table Tags {
+//   tag_id int [pk]
+//   name varchar
+// }
+
+// Table ProductTags {
+//   product_id int [ref: - Products.product_id]
+//   tag_id int [ref: - Tags.tag_id]
+// }
+
+
+
+//// ĐƠN HÀNG SP: ------------
+// Table Orders {
+//   order_id int [pk]
+//   user_id int [ref: - Users.user_id]
+//   order_date timestamp
+//   status varchar
+//   total_price decimal
+// }
+
+// Table OrderDetails {
+//   order_id int [ref: - Orders.order_id]
+//   product_id int [ref: - Products.product_id]
+//   quantity int
+//   price_each decimal
+// }
+
+
+
+//// Sự kiện Sales: ------------
+// Table SalesEvents {
+//   event_id int [pk]
+//   name varchar
+//   start_date timestamp
+//   end_date timestamp
+//   discount_rate decimal
+// }
+
+// Table ProductSalesEvents {
+//   product_id int [ref: - Products.product_id]
+//   event_id int [ref: - SalesEvents.event_id]
+// }
+
+
+// References
+Ref: Products.brand_id > Brands.brand_id
+
