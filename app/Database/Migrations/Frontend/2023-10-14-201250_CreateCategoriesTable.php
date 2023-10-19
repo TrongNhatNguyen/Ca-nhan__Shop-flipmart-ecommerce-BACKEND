@@ -10,7 +10,8 @@
  * 
  *  - Chạy lệnh để nạp duy nhất file này:
  *     C:\wamp64\bin\php\php8.0.26\php.exe spark migrate --path=App/Database/Migrations/Frontend --only=CreateCategoriesTable
- *    chạy lệnh: php spark migrate:rollback nếu muốn chạy lại lệnh trên
+ *
+ *  - Chạy lệnh: C:\wamp64\bin\php\php8.0.26\php.exe spark migrate:rollback -g default -n App\Database\Migrations\Frontend\CreateCategoriesTable nếu muốn Nạp lại
  */
 
 namespace App\Database\Migrations\Frontend;
@@ -44,11 +45,11 @@ class CreateCategoriesTable extends Migration
                 'default'    => 'active',
             ],
             'created_at' => [
-                'type' => 'DATETIME',
+                'type' => 'TIMESTAMP',
                 'null' => true,
             ],
             'updated_at' => [
-                'type' => 'DATETIME',
+                'type' => 'TIMESTAMP',
                 'null' => true,
             ],
         ]);

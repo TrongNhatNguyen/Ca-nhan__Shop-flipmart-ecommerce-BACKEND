@@ -60,4 +60,37 @@ class ProductModel extends Model
         $this->select($fields)->where($where)->orderBy($orderBy);
         return $this->findAll($limit, $offset);
     }
+
+
+    /**----------------------------------------------
+     * Lấy danh sách Sản Phẩm có IMAGES & Đánh Giá
+     * 
+     * @param bool|null $isPrimary - Lọc hình ảnh dựa trên is_primary. Mặc định là null (lấy tất cả hình ảnh).
+     */
+    public function get_list_with_image_and_reviews($where = [], $fields = '*', $orderBy = null, $limit = 10, $offset = 0, $isPrimary = null)
+    {
+        if (!$orderBy) {
+            $orderBy = $this->primaryKey . ' DESC';
+        }
+
+        // Lấy ra danh sách sản phẩm
+        $products = $this->select($fields)->where($where)->orderBy($orderBy)->findAll($limit, $offset);
+
+        // Lặp qua danh sách sản phẩm
+        foreach ($products as &$product) {
+            $product_id = $product['product_id'];
+
+            // Lấy hình ảnh cho sản phẩm
+            $imageQuery = $this->db->table('product_images')->where('product_id', $product_id);
+            if (is_bool($isPrimary)) {
+                $imageQuery->where('is_primary', $isPrimary);
+            }
+            $product['images'] = $imageQuery->get()->getResultArray();
+
+            // Lấy đánh giá cho sản phẩm
+            $product['reviews'] = $this->db->table('reviews')->where('product_id', $product_id)->get()->getResultArray();
+        }
+
+        return $products;
+    }
 }

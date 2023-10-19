@@ -38,13 +38,13 @@ class ProductSeeder extends Seeder
             'đây sẽ là một sự lựa chọn tuyệt vời cho bạn thoả sức sáng tạo, mang lại phong cách và sự tự tin.',
         ];
 
-        $names = ['T-Shirt', 'Jeans', 'Jacket', 'Sweater', 'Shorts'];
+        $names = ['Áo thun T-Shirt ', 'Quần Jeans ', 'Áo khoác Jacket ', 'Đồ mỏng Sweater ', 'Quần Shorts hoa ', 'Giày thể thao Nike '];
         $prices = [100000, 250000, 450000, 500000, 790000, 990000, 1250000];
         $timeNow = date('Y-m-d H:i:s');
         $data = [];
 
         for ($i = 0; $i < 30; $i++) {
-            $name = 'Sản phẩm ' . $names[array_rand($names)] . ($i + 1);
+            $name = $names[array_rand($names)] . ($i + 1);
             $description = $descriptions[array_rand($descriptions)] . ' ' . $additional_words[array_rand($additional_words)];
             $price = $prices[array_rand($prices)];
             $discount_price = [null, $price - 50000];

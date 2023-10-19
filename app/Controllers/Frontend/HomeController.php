@@ -60,7 +60,13 @@ class HomeController extends BaseController
      */
     public function show_new_products()
     {
-        $new_products = $this->productModel->get_list();
+        $dieu_kien = ['is_new' => 1];
+        $sap_xep   = 'created_at DESC';
+        $isPrimary = true;
+
+        $new_products = $this->productModel->get_list_with_image_and_reviews(where: $dieu_kien, orderBy: $sap_xep, isPrimary: $isPrimary);
+        // var_dump($new_products[1]);
+        // exit;
         return $new_products;
     }
 }

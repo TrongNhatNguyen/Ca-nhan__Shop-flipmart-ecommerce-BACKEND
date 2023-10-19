@@ -962,7 +962,7 @@
                                                 <div class="products">
                                                     <div class="product">
                                                         <div class="product-image">
-                                                            <div class="image"> <a href="detail.html"><img src="<?= base_url('public/frontend/assets/images/products/p1.jpg'); ?>" alt=""></a> </div>
+                                                            <div class="image"> <a href="detail.html"><img src="<?= base_url($product['images'][0]['image_path']); ?>" alt=""></a> </div>
 
                                                             <!-- ===  CALL PHP CODE  === -->
                                                             <?php if ($product['is_hot'] == true) : ?>
@@ -979,8 +979,13 @@
                                                             <div class="rating rateit-small"></div>
                                                             <div class="description"></div>
                                                             <div class="product-price">
-                                                                <span class="price"><?php echo $product['price'] ?> <?php echo $product['currency'] ?></span>
+
+                                                                <!-- ===  CALL PHP CODE  === -->
+                                                                <?php $formattedPrice = number_format($product['price'], 0, ',', '.') ?>
+                                                                <span class="price"><?php echo $formattedPrice ?> <?php echo $product['currency'] ?></span>
                                                                 <!-- <span class="price-before-discount">00</span> -->
+                                                                <!-- ===  END PHP CODE  === -->
+
                                                             </div>
 
                                                         </div>

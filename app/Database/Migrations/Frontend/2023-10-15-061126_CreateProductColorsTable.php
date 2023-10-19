@@ -10,7 +10,8 @@
  * 
  *  - Chạy lệnh để nạp duy nhất file này:
  *     C:\wamp64\bin\php\php8.0.26\php.exe spark migrate --path=App/Database/Migrations/Frontend --only=CreateProductColorsTable
- *    chạy lệnh: php spark migrate:rollback nếu muốn chạy lại lệnh trên
+ *
+ *  - Chạy lệnh: C:\wamp64\bin\php\php8.0.26\php.exe spark migrate:rollback -g default -n App\Database\Migrations\Frontend\CreateProductColorsTable nếu muốn Nạp lại
  */
 
 namespace App\Database\Migrations\Frontend;
