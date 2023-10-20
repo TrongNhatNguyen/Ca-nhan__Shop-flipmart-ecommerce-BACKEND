@@ -976,7 +976,21 @@
 
                                                         <div class="product-info text-left">
                                                             <h3 class="name"><a href="detail.html"><?php echo $product['name'] ?></a></h3>
-                                                            <div class="rating rateit-small"></div>
+
+                                                            <!-- <div class="rating rateit-small"></div> -->
+                                                            <div class="ratings">
+                                                                <!-- ===  CALL PHP CODE  === -->
+                                                                <?php
+                                                                for ($i = 1; $i <= 5; $i++) {
+                                                                    if ($i <= $product['reviews']) {
+                                                                        echo '<i class="fa fa-star rating-color"></i>';
+                                                                    } else {
+                                                                        echo '<i class="fa fa-star"></i>';
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <!-- ===  END PHP CODE  === -->
+                                                            </div>
                                                             <div class="description"></div>
                                                             <div class="product-price">
 

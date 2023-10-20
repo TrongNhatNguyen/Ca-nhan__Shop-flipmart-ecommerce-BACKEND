@@ -62,11 +62,20 @@ class HomeController extends BaseController
     {
         $dieu_kien = ['is_new' => 1];
         $sap_xep   = 'created_at DESC';
-        $isPrimary = true;
 
-        $new_products = $this->productModel->get_list_with_image_and_reviews(where: $dieu_kien, orderBy: $sap_xep, isPrimary: $isPrimary);
-        // var_dump($new_products[1]);
+        $new_products = $this->productModel->get_list_with_image_stars(where: $dieu_kien, orderBy: $sap_xep);
+        // var_dump($new_products);
         // exit;
         return $new_products;
+    }
+
+
+    /**-------------------------------
+     *  Hàm show Sản phẩm Tiêu Biểu
+     */
+    public function show_featured_products()
+    {
+        $featured_products = $this->productModel->get_top_rated_products();
+        return $featured_products;
     }
 }

@@ -272,6 +272,7 @@ jQuery(document).ready(function () {
             pagination: false,
         });
 
+        // SLIDER SẢN PHẨM Ở TRANG HOME:
         jQuery('.home-owl-carousel').each(function () {
             var owl = $(this);
             var itemPerLine = owl.data('item');
@@ -279,6 +280,8 @@ jQuery(document).ready(function () {
                 itemPerLine = 4;
             }
             owl.owlCarousel({
+                autoPlay: 5000,
+                stopOnHover: true,
                 items: itemPerLine,
                 itemsTablet: [768, 2],
                 navigation: true,

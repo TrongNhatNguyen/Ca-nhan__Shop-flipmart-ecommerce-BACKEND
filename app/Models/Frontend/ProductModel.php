@@ -40,16 +40,22 @@ class ProductModel extends Model
 
     // =================================================================
     protected $validation;
+    protected $productImageModel;
+    protected $reviewModel;
     function __construct()
     {
-        parent::__construct(); // hàm này cho phép viết câu truy vấn ở controller
+        parent::__construct();
 
         // nạp thư viện kiểm tra Quy tắc:
         $this->validation = \Config\Services::validation();
+
+        // Khởi tạo lớp Model:
+        $this->productImageModel = new ProductImageModel();
+        $this->reviewModel       = new ReviewModel();
     }
 
 
-    /**------------------------------
+    /**----------------------------
      * Lấy danh sách Sản Phẩm
      */
     public function get_list($where = [], $fields = '*', $orderBy = null, $limit = 10, $offset = 0)
@@ -62,12 +68,10 @@ class ProductModel extends Model
     }
 
 
-    /**----------------------------------------------
-     * Lấy danh sách Sản Phẩm có IMAGES & Đánh Giá
-     * 
-     * @param bool|null $isPrimary - Lọc hình ảnh dựa trên is_primary. Mặc định là null (lấy tất cả hình ảnh).
+    /**-----------------------------------------------
+     * Lấy DS Sản Phẩm có Ảnh tiêu biểu và Sao rating
      */
-    public function get_list_with_image_and_reviews($where = [], $fields = '*', $orderBy = null, $limit = 10, $offset = 0, $isPrimary = null)
+    public function get_list_with_image_stars($where = [], $fields = '*', $orderBy = null, $limit = 10, $offset = 0)
     {
         if (!$orderBy) {
             $orderBy = $this->primaryKey . ' DESC';
@@ -80,17 +84,42 @@ class ProductModel extends Model
         foreach ($products as &$product) {
             $product_id = $product['product_id'];
 
-            // Lấy hình ảnh cho sản phẩm
-            $imageQuery = $this->db->table('product_images')->where('product_id', $product_id);
-            if (is_bool($isPrimary)) {
-                $imageQuery->where('is_primary', $isPrimary);
-            }
-            $product['images'] = $imageQuery->get()->getResultArray();
+            // Lấy ảnh tiêu biểu cho từng sản phẩm
+            $product['images'] = $this->productImageModel->get_primary_image($product_id);
 
-            // Lấy đánh giá cho sản phẩm
-            $product['reviews'] = $this->db->table('reviews')->where('product_id', $product_id)->get()->getResultArray();
+            // Lấy SAO đánh giá trung bình cho từng sản phẩm
+            $product['reviews'] = $this->reviewModel->get_average_rating($product_id);
         }
 
         return $products;
+    }
+
+
+    /**--------------------------------------
+     * Lấy danh sách Sản Phẩm Bán Chạy
+     */
+    public function get_best_selling_products($limit = 10, $offset = 0)
+    {
+        $this->select('products.*, COUNT(orders.id) as total_orders')
+            ->join('orders', 'products.product_id = orders.product_id')
+            ->groupBy('products.product_id')
+            ->orderBy('total_orders', 'DESC');
+
+        return $this->findAll($limit, $offset);
+    }
+
+
+    /**-------------------------------------------
+     * Lấy danh sách Sản Phẩm được Đánh Giá Cao
+     */
+    public function get_top_rated_products($limit = 10, $offset = 0)
+    {
+        $this->select('products.*, AVG(reviews.rating) as average_rating')
+            ->join('reviews', 'products.product_id = reviews.product_id')
+            ->where('reviews.status', 'active')
+            ->groupBy('products.product_id')
+            ->orderBy('average_rating', 'DESC');
+
+        return $this->findAll($limit, $offset);
     }
 }

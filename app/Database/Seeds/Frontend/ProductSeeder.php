@@ -55,10 +55,9 @@ class ProductSeeder extends Seeder
                 'price' => $price,
                 'discount_price' => $discount_price[array_rand($discount_price)],
                 'brand_id' => rand(1, 5),
-                'created_at' => $timeNow,
-                'updated_at' => $timeNow,
                 'is_hot' => (bool)rand(0, 1),
                 'is_new' => (bool)rand(0, 1),
+                'created_at' => $timeNow,
             ];
         }
 
