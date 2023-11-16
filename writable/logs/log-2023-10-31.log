@@ -1,0 +1,10 @@
+CRITICAL - 2023-10-31 06:56:24 --> Undefined array key "images"
+in APPPATH\Views\frontend\home\index.php on line 1068.
+ 1 APPPATH\Views\frontend\home\index.php(1068): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "images"', 'D:\\VSCODE-PROJECTS\\www\\PHP-CODEIGNITER-PRO\\Shop-flipmart-ecommerce\\app\\Views\\frontend\\home\\index.php', 1068)
+ 2 SYSTEMPATH\View\View.php(226): include('D:\\VSCODE-PROJECTS\\www\\PHP-CODEIGNITER-PRO\\Shop-flipmart-ecommerce\\app\\Views\\frontend\\home\\index.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 APPPATH\Controllers\Frontend\HomeController.php(42): CodeIgniter\View\View->render('index')
+ 5 SYSTEMPATH\CodeIgniter.php(919): App\Controllers\Frontend\HomeController->index()
+ 6 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Frontend\HomeController))
+ 7 SYSTEMPATH\CodeIgniter.php(353): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()

@@ -35,6 +35,7 @@ class HomeController extends BaseController
     {
         $data['list_category'] = $this->show_sidebar_category();
         $data['new_products']  = $this->show_new_products();
+        $data['featured_products']  = $this->show_featured_products();
 
         // Trả về giao diện index có: extend,section ở Views
         $view = $this->services->renderer(APPPATH . 'Views/frontend/home/', null, false);
@@ -63,9 +64,9 @@ class HomeController extends BaseController
         $dieu_kien = ['is_new' => 1];
         $sap_xep   = 'created_at DESC';
 
-        $new_products = $this->productModel->get_list_with_image_stars(where: $dieu_kien, orderBy: $sap_xep);
-        // var_dump($new_products);
-        // exit;
+        $new_products = $this->productModel->get_list(where: $dieu_kien, orderBy: $sap_xep);
+        $new_products = $this->productModel->find_image_and_stars($new_products);
+
         return $new_products;
     }
 
@@ -76,6 +77,7 @@ class HomeController extends BaseController
     public function show_featured_products()
     {
         $featured_products = $this->productModel->get_top_rated_products();
+        $featured_products = $this->productModel->find_image_and_stars($featured_products);
         return $featured_products;
     }
 }

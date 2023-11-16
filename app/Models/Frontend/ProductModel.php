@@ -69,19 +69,16 @@ class ProductModel extends Model
 
 
     /**-----------------------------------------------
-     * Lấy DS Sản Phẩm có Ảnh tiêu biểu và Sao rating
+     * Nạp thêm Ảnh tiêu biểu và Sao rating vào DS
      */
-    public function get_list_with_image_stars($where = [], $fields = '*', $orderBy = null, $limit = 10, $offset = 0)
+    public function find_image_and_stars($list_products)
     {
-        if (!$orderBy) {
-            $orderBy = $this->primaryKey . ' DESC';
+        if (!$list_products) {
+            return [];
         }
 
-        // Lấy ra danh sách sản phẩm
-        $products = $this->select($fields)->where($where)->orderBy($orderBy)->findAll($limit, $offset);
-
         // Lặp qua danh sách sản phẩm
-        foreach ($products as &$product) {
+        foreach ($list_products as &$product) {
             $product_id = $product['product_id'];
 
             // Lấy ảnh tiêu biểu cho từng sản phẩm
@@ -91,7 +88,7 @@ class ProductModel extends Model
             $product['reviews'] = $this->reviewModel->get_average_rating($product_id);
         }
 
-        return $products;
+        return $list_products;
     }
 
 
